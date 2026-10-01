@@ -87,6 +87,7 @@ except requests.exceptions.RequestException as e:
 
 ### 2. Scorecard Webhook Payload
 Once the interview concludes, Kovi sends a structured JSON scorecard to your ATS:
+
 ```json
 {
   "candidate_id": "cnd_98765",
@@ -101,18 +102,3 @@ Once the interview concludes, Kovi sends a structured JSON scorecard to your ATS
   "weaknesses": ["CI/CD Pipeline Configuration"],
   "transcript_url": "[https://techeval.ai/dash/transcripts/cnd_98765](https://techeval.ai/dash/transcripts/cnd_98765)"
 }
-
-
-
-
-## 💳 Pricing & Accounts
-
-* **Free Trial:** New accounts receive **10 free credits** upon sign-up.
-* **Standard Pricing:** **₹150 per interview credit**. 
-* **Usage:** One credit equals one complete interview, regardless of the interview's duration (up to the 60-minute maximum).
-* **Account Limits:** Registration is restricted to one user account per specific company branch. Multiple users from the same company can register if they are assigned to different regional branches/locations.
-
-## 📞 Support
-
-* **Sales & Custom ATS Integrations:** contact@techeval.ai
-* **Technical Support:** support@techeval.ai
