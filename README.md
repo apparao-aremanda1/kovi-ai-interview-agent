@@ -40,18 +40,77 @@ Kovi ensures the integrity of every technical evaluation through a multi-layered
 
 You can programmatically generate interview links and receive instant scorecards upon completion.
 
-### 1. Schedule an Interview (Node.js Example)
-```javascript
-const kovi = require('kovi-sdk');
+### 1. Schedule an Interview (Python Example)
+```python
+import requests
 
-kovi.scheduleInterview({
-  candidateEmail: "engineer@example.com",
-  role: "AI Engineer",
-  interviewType: "System Design",
-  evaluationLevel: "Senior / Architecture",
-  techStack: ["Python", "FastAPI", "PostgreSQL"],
-  duration: 60, // Max 60 minutes
-  passScore: 6.5
-}).then(response => {
-  console.log(`Interview link: ${response.interviewUrl}`);
-});
+url = "[https://kovi-backend-398838744187.asia-south1.run.app/api/v1/schedule](https://kovi-backend-398838744187.asia-south1.run.app/api/v1/schedule)"
+api_key = "YOUR_LIVE_API_KEY_HERE"
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {api_key}"
+}
+
+payload = {
+    "jobId": "JD-AI-7284",  # The internal ATS Job ID
+    "candidateEmail": "XXXXXXXXXXX@gmail.com",
+    "candidateName": "XXXXX  XXXXXX",
+    "mobileNumber": "+91-0000000000",
+    "role": "AI Engineer",
+    "interviewType": "System Design",
+    "evaluationLevel": "Mid-Level to Senior",
+    "techStack": [
+        "Python", "FastAPI", "GCP", "LangChain", "LangGraph", 
+        "Next.js", "OpenAI API", "HuggingFace", "Whisper", 
+        "PostgreSQL", "Supabase", "Pinecone", "Weaviate", "pgvector"
+    ],
+    "duration": 15,
+    "passScore": 6.5,
+    "deadlineHours": 72
+}
+
+try:
+    response = requests.post(url, json=payload, headers=headers)
+    
+    if response.status_code == 200:
+        data = response.json()
+        print("✅ API Success!")
+        print(f"🔗 Send this link to the candidate: {data.get('interviewUrl')}")
+    else:
+        error_detail = response.json().get("detail", "Unknown Server Error")
+        print(f"❌ API Failed (Status {response.status_code}): {error_detail}")
+
+except requests.exceptions.RequestException as e:
+    print(f"❌ Network Error: {e}")
+
+
+### 2. Scorecard Webhook Payload
+Once the interview concludes, Kovi sends a structured JSON scorecard to your ATS:
+```json
+{
+  "candidate_id": "cnd_98765",
+  "final_score": 7.2,
+  "passed_threshold": true,
+  "proctoring_flags": {
+    "tab_switches": 0,
+    "ai_copilot_detected": false,
+    "disconnects": 1
+  },
+  "strengths": ["Database Scaling", "Microservices Architecture"],
+  "weaknesses": ["CI/CD Pipeline Configuration"],
+  "transcript_url": "[https://techeval.ai/dash/transcripts/cnd_98765](https://techeval.ai/dash/transcripts/cnd_98765)"
+}
+
+
+## 💳 Pricing & Accounts
+
+* **Free Trial:** New accounts receive **10 free credits** upon sign-up.
+* **Standard Pricing:** **₹150 per interview credit**. 
+* **Usage:** One credit equals one complete interview, regardless of the interview's duration (up to the 60-minute maximum).
+* **Account Limits:** Registration is restricted to one user account per specific company branch. Multiple users from the same company can register if they are assigned to different regional branches/locations.
+
+## 📞 Support
+
+* **Sales & Custom ATS Integrations:** contact@techeval.ai
+* **Technical Support:** support@techeval.ai
