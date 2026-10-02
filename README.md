@@ -40,49 +40,38 @@ Kovi ensures the integrity of every technical evaluation through a multi-layered
 
 You can programmatically generate interview links and receive instant scorecards upon completion.
 
-### 1. Schedule an Interview (Python Example)
-```python
-import requests
+**Installation:**
+```bash
+pip install kovi-sdk
 
-url = "[https://kovi-backend-398838744187.asia-south1.run.app/api/v1/schedule](https://kovi-backend-398838744187.asia-south1.run.app/api/v1/schedule)"
-api_key = "YOUR_LIVE_API_KEY_HERE"
+from kovi import KoviClient
 
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"Bearer {api_key}"
-}
-
-payload = {
-    "jobId": "JD-AI-7284",  # The internal ATS Job ID
-    "candidateEmail": "XXXXXXXXXXX@gmail.com",
-    "candidateName": "XXXXX  XXXXXX",
-    "mobileNumber": "+91-0000000000",
-    "role": "AI Engineer",
-    "interviewType": "System Design",
-    "evaluationLevel": "Mid-Level to Senior",
-    "techStack": [
-        "Python", "FastAPI", "GCP", "LangChain", "LangGraph", 
-        "Next.js", "OpenAI API", "HuggingFace", "Whisper", 
-        "PostgreSQL", "Supabase", "Pinecone", "Weaviate", "pgvector"
-    ],
-    "duration": 15,
-    "passScore": 6.5,
-    "deadlineHours": 72
-}
+# Initialize the client with your API key
+client = KoviClient(api_key="YOUR_LIVE_API_KEY_HERE")
 
 try:
-    response = requests.post(url, json=payload, headers=headers)
+    response = client.schedule_interview(
+        job_id="JD-AI-7284",
+        candidate_name="******* *********",
+        candidate_email="**********@gmail.com",
+        mobile_number="+91-**********",
+        role="AI Engineer",
+        interview_type="System Design",
+        evaluation_level="Mid-Level to Senior",
+        tech_stack=[
+            "Python", "FastAPI", "GCP", "LangChain", 
+            "PostgreSQL", "Supabase", "Pinecone"
+        ],
+        duration=15,
+        pass_score=6.5,
+        deadline_hours=72
+    )
     
-    if response.status_code == 200:
-        data = response.json()
-        print("✅ API Success!")
-        print(f"🔗 Send this link to the candidate: {data.get('interviewUrl')}")
-    else:
-        error_detail = response.json().get("detail", "Unknown Server Error")
-        print(f"❌ API Failed (Status {response.status_code}): {error_detail}")
+    print("✅ API Success!")
+    print(f"🔗 Send this link to the candidate: {response.get('interviewUrl')}")
 
-except requests.exceptions.RequestException as e:
-        print(f"❌ Network Error: {e}")
+except Exception as e:
+    print(f"❌ Failed to schedule interview: {e}")
 ```
 
 ### 2. Scorecard Webhook Payload
