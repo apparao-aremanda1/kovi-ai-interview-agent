@@ -17,6 +17,8 @@ Kovi by techeval.ai is an autonomous AI technical interviewer tailored by senior
 | **Must-Ask Questions** | Editable custom prompt injections | Ensures critical compliance or role-specific questions are answered. |
 | **Evaluation Controls** | Max 60 mins duration & custom Pass Score | Sets objective quantitative benchmarks (e.g., 6.5) for candidate filtering. |
 | **Deadlines & Expiration** | Configurable hour deadlines (e.g., 48 Hours) | Enforces strict link-expiration rules to maintain pipeline velocity. |
+| **Automated PDF Transcripts** | Raw, unedited verbatim conversation record | Provides HR and hiring managers an authentic, offline record of the candidate's spoken responses for review.
+| **AI Interview Scorecards** | Quantitative technical score, Hire/No-Hire recommendation, strengths, and improvement areas | Delivers immediate, objective evaluation summaries to hiring managers for fast decision-making. |
 
 ## 🛡️ Enterprise Security & Anti-Cheat Engine
 
