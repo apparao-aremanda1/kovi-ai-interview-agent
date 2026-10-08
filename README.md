@@ -1,3 +1,5 @@
+[![Data Residency](https://img.shields.io/badge/Data_Residency-India_(DPDP)-purple)](https://techeval.ai)
+
 # Kovi AI Interview Agent by TechEval.ai
 
 Kovi by techeval.ai is an autonomous AI technical interviewer tailored by seniority (Junior to Architect). Runs initial screens, deep dives, & system design with custom pass scores, tech stacks, must-ask questions, & smart proctoring. Auto-evaluates engineering talent 24/7 to scale hiring to 1,000+ screens/day with zero human fatigue.
@@ -6,6 +8,27 @@ Kovi by techeval.ai is an autonomous AI technical interviewer tailored by senior
 [![Pricing](https://img.shields.io/badge/Cost-₹150%2FInterview-blue)](https://techeval.ai)
 [![Platform](https://img.shields.io/badge/Platform-WebRTC-orange)]()
 
+## 🏗️ Architecture & Workflow
+
+TechEval.ai runs on a serverless architecture (GCP Cloud Run + Vercel) paired with stateful LangGraph agents to guarantee low conversational latency, zero hallucinations, and full data compliance.
+
+```mermaid
+graph TD
+    A[Client Application / ATS] -->|1. Initialize API| B(FastAPI Gateway)
+    B --> C{LangGraph Supervisor Agent}
+    C -->|2. Extract Tech Stack| D[Resume & JD Parser]
+    C -->|3. WebRTC Real-Time Voice| E[Adaptive Q&A Engine]
+    E -->|4. Sub-500ms Audio Stream| F((Candidate Session))
+    F -->|5. Gaze, Audio & Cadence Data| G[Anti-Cheat & Copilot Detection]
+    G -->|Real-Time Telemetry| C
+    C -->|6. Generate Scorecard & Transcript| H[Objective Evaluation Engine]
+    H -->|7. Structured Webhook / PDF| A
+```
+
+### Key Engineering Guardrails
+* **Deterministic LangGraph Supervision:** Unlike simple LLM wrappers, Kovi operates under a strict supervisor-worker graph to adhere strictly to your grading rubrics without drifting off-topic or hallucinating ratings.
+* **100% India-Localized Infrastructure (DPDP Ready):** All candidate voice data, video feeds, and evaluation logs are processed locally through India cloud regions (Mumbai), providing ultra-low conversational latency and complete regulatory compliance.
+* **Lean Serverless Economics:** Hosted entirely on serverless compute, eliminating idle server overhead and delivering full 60-minute technical screens at a flat rate of **₹150 per interview**.
 ## 🚀 Core Capabilities & Configurable Parameters
 
 | Feature | Options & Customization | Purpose |
@@ -40,10 +63,14 @@ Kovi ensures the integrity of every technical evaluation through a multi-layered
 
 You can programmatically generate interview links and receive instant scorecards upon completion.
 
-**Installation:**
+### 1. Installation
+Install the official SDK from PyPI:
 ```bash
 pip install kovi-sdk
+```
 
+### 2. Schedule an Interview Programmatically
+```python
 from kovi import KoviClient
 
 # Initialize the client with your API key
@@ -52,8 +79,8 @@ client = KoviClient(api_key="YOUR_LIVE_API_KEY_HERE")
 try:
     response = client.schedule_interview(
         job_id="JD-AI-7284",
-        candidate_name="******* *********",
-        candidate_email="**********@gmail.com",
+        candidate_name="Candidate Name",
+        candidate_email="candidate@example.com",
         mobile_number="+91-**********",
         role="AI Engineer",
         interview_type="System Design",
@@ -62,19 +89,18 @@ try:
             "Python", "FastAPI", "GCP", "LangChain", 
             "PostgreSQL", "Supabase", "Pinecone"
         ],
-        duration=15,
+        duration=30,
         pass_score=6.5,
         deadline_hours=72
     )
     
-    print("✅ API Success!")
-    print(f"🔗 Send this link to the candidate: {response.get('interviewUrl')}")
+    print("✅ Interview Scheduled Successfully!")
+    print(f"🔗 Candidate Link: {response.get('interviewUrl')}")
 
 except Exception as e:
     print(f"❌ Failed to schedule interview: {e}")
 ```
-
-### 2. Scorecard Webhook Payload
+### 3. Scorecard Webhook Payload
 Once the interview concludes, Kovi sends a structured JSON scorecard to your ATS:
 
 ```json
